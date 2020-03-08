@@ -20,10 +20,6 @@ def get_bool():
         return False
 
 
-def make_list(list_func, n):
-    return to_list(list_func, n)
-
-
 def check_state(s_list):
     checked_list = s_list
 

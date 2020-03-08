@@ -26,28 +26,7 @@ def check_state(s_list):
     def find_neighboors(i, j):
         neighboors = 0
 
-        '''
-        if i and j both is 0 --> check list[i][j+1], list[i+1][j], list[i+1][j+1] DONE
-
-        if i is 0, and j > 0 --> check list[i][j-1] list[i][j+1] list[i+1][j-1 ---> j+1] DONE
-
-        if i > 0 and J is 0 -> list[i-1][j -> j+1], list[i][j+1], list[i+1][j -> j+1] DONE 
-
-        if i > 0 and j > 0 --> check list[i-1][j -> j+2], list[i][j-1 og j+1], og list[i+1][j-1 -> j+1] DONE    
-
-        i == 0, j == len(list[i][j]) --> check list[i][j-1], list[i+1][j-1] list[i+1][j] DONE 
-
-        i > 0, j ==  len(list[i][j]) --> check list[i-1 -> i+1][j-1], list[i-1, i+1][j] Done
-
-        i == len(list[i]), j == 0 DONE 
-
-        i == len(list[i]), j == len(list[i][j]) DONE
-
-
-        all lines commented out gave indexOutOfRangeException
-
-
-        '''
+        # Could possibly be done with one set of requisites for checks, and a try/except
         if i == 0:
             if j == 0:
                 if s_list[i][j + 1]:
@@ -59,26 +38,25 @@ def check_state(s_list):
                 if s_list[i + 1][j + 1]:
                     neighboors += 1
 
-            elif j < len(s_list[i]):
+            elif j < (len(s_list[i])-1):
                 if s_list[i][j - 1]:
                     neighboors += 1
-                # if s_list[i][j + 1]:
-                #   neighboors += 1
+                if s_list[i][j + 1]:
+                    neighboors += 1
                 if s_list[i + 1][j - 1]:
                     neighboors += 1
                 if s_list[i + 1][j]:
                     neighboors += 1
-            #   if s_list[i + 1][j + 1]:
-            #      neighboors += 1
+                if s_list[i + 1][j + 1]:
+                    neighboors += 1
             else:
                 if s_list[i][j - 1]:
-                    if s_list[i][j + 1]:
-                        neighboors += 1
-                    if s_list[i + 1][j - 1]:
-                        neighboors += 1
-                    if s_list[i + 1][j]:
-                        neighboors += 1
-        elif i > 0 and i != len(s_list[i]):
+                    neighboors += 1
+                if s_list[i + 1][j - 1]:
+                    neighboors += 1
+                if s_list[i + 1][j]:
+                    neighboors += 1
+        elif i > 0 and i != (len(s_list[i])-1):
             if j == 0:
                 if s_list[i - 1][j]:
                     neighboors += 1
@@ -86,30 +64,30 @@ def check_state(s_list):
                     neighboors += 1
                 if s_list[i][j + 1]:
                     neighboors += 1
-            #    if s_list[i + 1][j]:
-            #        neighboors += 1
-            #    if s_list[i + 1][j + 1]:
-            #        neighboors += 1
+                if s_list[i + 1][j]:
+                    neighboors += 1
+                if s_list[i + 1][j + 1]:
+                    neighboors += 1
 
-            elif j < len(s_list[i]):
+            elif j < (len(s_list[i])-1):
                 if s_list[i - 1][j - 1]:
                     neighboors += 1
                 if s_list[i - 1][j]:
                     neighboors += 1
-                #   if s_list[i - 1][j + 1]:
-                #      neighboors += 1
+                if s_list[i - 1][j + 1]:
+                    neighboors += 1
                 if s_list[i][j - 1]:
                     neighboors += 1
-            #   if s_list[i][j + 1]:
-            #      neighboors += 1
-            #    if s_list[i + 1][j - 1]:
-            #        neighboors += 1
-            #    if s_list[i + 1][j]:
-            #        neighboors += 1
-            #    if s_list[i + 1][j + 1]:
-            #       neighboors += 1
+                if s_list[i][j + 1]:
+                  neighboors += 1
+                if s_list[i + 1][j - 1]:
+                    neighboors += 1
+                if s_list[i + 1][j]:
+                    neighboors += 1
+                if s_list[i + 1][j + 1]:
+                   neighboors += 1
 
-            elif j == len(s_list[i]):
+            elif j == (len(s_list[i])-1):
                 if s_list[i - 1][j - 1]:
                     neighboors += 1
                 if s_list[i][j - 1]:
@@ -129,7 +107,7 @@ def check_state(s_list):
                 if s_list[i][j + 1]:
                     neighboors += 1
 
-            if j == len(s_list[i]):
+            if j == (len(s_list[i])-1):
                 if s_list[i - 1][j - 1]:
                     neighboors += 1
                 if s_list[i - 1][j]:
@@ -139,8 +117,7 @@ def check_state(s_list):
 
         return neighboors
 
-    # alive og not_alive er uferdige, og trenger parameter: i, j, iter_list skal ikke sette verdier av checked list,
-    # det skal alive og not alive gjøre
+
     def alive(i, j, neighboors):
         # endrer verdi for index i liste
         if neighboors < 2:
@@ -167,6 +144,13 @@ def check_state(s_list):
     iter_list()
     return checked_list
 
+def make_boollist_int(bool_list):
+    numeral_list = bool_list
+    for i in range(len(bool_list)):
+        for j in range(len(bool_list[i])):
+            numeral_list[i][j] = int(bool_list[i][j])
+    return numeral_list
+
 
 def main_func(boardsize, rounds):
     # creates a n*n size list of booleans
@@ -174,14 +158,15 @@ def main_func(boardsize, rounds):
     original_state = to_list(game, boardsize)
 
     def print_list(s_list):
-        for i in range(len(s_list)):
-            print(s_list[i])
+        printed_list = make_boollist_int(s_list)
+        for i in range(len(printed_list)):
+            print(printed_list[i])
         print('\n\n')
 
     def run_game():
         m_list = original_state
         print_list(original_state)
-        #time.sleep(1)
+        time.sleep(1)
         for i in range(rounds):
 
             # Breaks if all cells are dead
@@ -194,13 +179,13 @@ def main_func(boardsize, rounds):
                 break
 
             if i == 0:
-                m_list = check_state(original_state)
+                m_list = check_state(m_list)
                 print_list(m_list)
             else:
                 m_list = check_state(m_list)
                 print_list(m_list)
 
-            # time.sleep(1)
+            time.sleep(1)
 
     run_game()
 

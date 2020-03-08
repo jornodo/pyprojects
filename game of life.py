@@ -159,7 +159,7 @@ def make_boollist_int(bool_list):
 def main_func(boardsize, rounds):
     # creates a n*n size list of booleans
     game = partial(to_list, get_bool, boardsize)
-    original_state = to_list(game, boardsize)
+    original_state = to_list(game, boardsize).copy()
 
     def print_list(s_list):
         printed_list = make_boollist_int(s_list).copy()
@@ -194,5 +194,5 @@ def main_func(boardsize, rounds):
     run_game()
 
 
-main_func(100, 100)
+main_func(5, 100)
 

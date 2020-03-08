@@ -21,7 +21,11 @@ def get_bool():
 
 
 def check_state(s_list):
-    checked_list = s_list
+    checked_list = []
+
+    # Checks
+    for i in range(len(s_list)):
+        checked_list.append(s_list[i].copy())
 
     def find_neighboors(i, j):
         neighboors = 0
@@ -145,7 +149,7 @@ def check_state(s_list):
     return checked_list
 
 def make_boollist_int(bool_list):
-    numeral_list = bool_list
+    numeral_list = bool_list.copy()
     for i in range(len(bool_list)):
         for j in range(len(bool_list[i])):
             numeral_list[i][j] = int(bool_list[i][j])
@@ -158,13 +162,13 @@ def main_func(boardsize, rounds):
     original_state = to_list(game, boardsize)
 
     def print_list(s_list):
-        printed_list = make_boollist_int(s_list)
+        printed_list = make_boollist_int(s_list).copy()
         for i in range(len(printed_list)):
             print(printed_list[i])
         print('\n\n')
 
     def run_game():
-        m_list = original_state
+        m_list = original_state.copy()
         print_list(original_state)
         time.sleep(1)
         for i in range(rounds):
@@ -179,10 +183,10 @@ def main_func(boardsize, rounds):
                 break
 
             if i == 0:
-                m_list = check_state(m_list)
+                m_list = check_state(m_list).copy()
                 print_list(m_list)
             else:
-                m_list = check_state(m_list)
+                m_list = check_state(m_list).copy()
                 print_list(m_list)
 
             time.sleep(1)
@@ -190,5 +194,5 @@ def main_func(boardsize, rounds):
     run_game()
 
 
-main_func(5, 100)
+main_func(100, 100)
 

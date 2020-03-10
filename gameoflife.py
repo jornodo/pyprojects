@@ -28,7 +28,7 @@ def check_state(s_list):
 
     def find_neighbors(i, j):
         neighbors = 0
-        neighbor_loc = [[i-1, j-1], [i, j-1], [j+1, j-1], [i, j-1], [i, j+1], [i+1, j-1], [i+1, j], [i+1, j+1]]
+        neighbor_loc = [[i-1, j-1], [i-1, j], [i-1, j+1], [i, j-1], [i, j+1], [i+1, j-1], [i+1, j], [i+1, j+1]]
         for loc in neighbor_loc:
             try:
                 if s_list[loc[0]][loc[1]]:
@@ -105,9 +105,10 @@ def main_func(boardsize, rounds):
             else:
                 m_list = check_state(m_list).copy()
                 print_list(m_list)
-            time.sleep(1)
+            #time.sleep(1)
+
 
     run_game()
 
 
-main_func(5, 1000000)
+main_func(5, 100)
